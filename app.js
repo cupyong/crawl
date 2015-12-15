@@ -32,6 +32,7 @@ App=function(){
 
     this.crawlHtml = function(){
         status=true;
+        compeleteHrurl=0;
         companyNum =0;
         existHrUrl=0;
         companys=[];
@@ -139,7 +140,7 @@ App=function(){
         //console.log(JSON.stringify(detail))
         //console.log(companys.length)
         if(companys.length==1000){
-            compeleteHrurl=0;
+
             for(var i=0;i<companys.length;i++){
                 server.getHrUrl(companys[i]);
             }
