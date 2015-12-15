@@ -150,7 +150,7 @@ App=function(){
 
     }
     //获取招聘页面url
-    this.getHrUrl=function(detail){
+    this.getHrUrl=function(detail,index){
 
       if(detail.weisite){
           c.queue([{
@@ -169,6 +169,7 @@ App=function(){
                           });
                           if( detail.hrUrl){
                               existHrUrl++;
+                              companys[index]=detail;
                           }
                           compeleteHrurl++;
                           if(compeleteHrurl==companys.length){
@@ -194,7 +195,7 @@ App=function(){
 
     this.saveHtml=function(){
         var outputFilename = 'companies.json';
-        fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
+         fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
             if(err) {
                 console.log(err);
             } else {
