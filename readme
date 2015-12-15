@@ -15,6 +15,8 @@ bug
 
 4:windonw下 gb2313的汉字可能存在乱码(导致部分招聘url获取是汉字乱码)
 
+5 在获取招聘页面的url的地方可以改成promise的方式 不用回调  用promise会减少相应的代码量
+
 
 
    npm install 安装相关的包
