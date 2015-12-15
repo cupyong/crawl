@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var App = require('../app').App;
+var app = new App();
+app.crawlHtml();
