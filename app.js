@@ -23,6 +23,7 @@ var c = new crawler({
 });
 
 App=function(){
+    var maxcompanyNum=1000;
     var compeleteHrurl=0;
     var existHrUrl=0;
     var companys=[];
@@ -133,13 +134,13 @@ App=function(){
             }
              server.getHrUrl(detail);
         })
-        if(companys.length<1000){
+        if(companys.length<maxcompanyNum){
             companys.push(detail);
         }
 
         //console.log(JSON.stringify(detail))
         //console.log(companys.length)
-        if(companys.length==1000){
+        if(companys.length==maxcompanyNum){
 
             for(var i=0;i<companys.length;i++){
                 server.getHrUrl(companys[i]);
@@ -195,6 +196,7 @@ App=function(){
 
     this.saveHtml=function(){
         var outputFilename = 'companies.json';
+        console.log(companys);
          fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
             if(err) {
                 console.log(err);
@@ -204,10 +206,5 @@ App=function(){
         });
     }
 }
-
-
-
-
-
 
 exports.App = App;
