@@ -89,7 +89,7 @@ App=function(){
                 jQuery: true,
                 // The global callback won't be called
                 callback: function (error, result ,$) {
-                    if(body&&result.body){
+                    if(result&&result.body){
                         server.saveDetail(result.body);
                     }
                 }
@@ -174,7 +174,7 @@ App=function(){
                           }
                           compeleteHrurl++;
 
-                          console.log(compeleteHrurl)
+
 
                       }catch(ex){
 
@@ -184,7 +184,7 @@ App=function(){
           }]);
       }else{
           compeleteHrurl++;
-          console.log(compeleteHrurl)
+
           if(compeleteHrurl==companys.length){
               server.saveHtml();
           }
@@ -194,6 +194,7 @@ App=function(){
     this.saveHtml=function(){
         var outputFilename = 'companies.json';
         companys.push({"existHrUrl":existHrUrl});
+        console.log("companys:"+companys.length)
         fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
             if(err) {
                 console.log(err);
