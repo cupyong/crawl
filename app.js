@@ -132,8 +132,7 @@ App=function(){
             if($(li).html().indexOf("简介:")>-1){
                 detail.description=$(li).find('em').html();
             }
-             server.getHrUrl(detail);
-        })
+       })
         if(companys.length<maxcompanyNum){
             companys.push(detail);
         }
@@ -141,7 +140,7 @@ App=function(){
         //console.log(JSON.stringify(detail))
         //console.log(companys.length)
         if(companys.length==maxcompanyNum){
-
+            console.log(companys.length)
             for(var i=0;i<companys.length;i++){
                 server.getHrUrl(companys[i]);
             }
