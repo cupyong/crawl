@@ -46,15 +46,20 @@ App=function(){
                     //console.log($(".follow_link"));
                     var maxPage=1;//最大页数
                     var maxUrl="";//最大页数
-                    $(".follow_link").each(function(index,page){
-                        maxUrl = $(page).attr("href")
-                    })
-                    var p=URL.parse(maxUrl,true);
-                    maxPage =parseInt(p.query.page);
-                    console.log(p.query.page)
-                    for(var i=0;i<maxPage;i++){
-                        server.getSencodHtml("http://itjuzi.com/company?page="+i);
+                    try{
+                        $(".follow_link").each(function(index,page){
+                            maxUrl = $(page).attr("href")
+                        })
+                        var p=URL.parse(maxUrl,true);
+                        maxPage =parseInt(p.query.page);
+                        console.log(p.query.page)
+                        for(var i=0;i<maxPage;i++){
+                            server.getSencodHtml("http://itjuzi.com/company?page="+i);
+                        }
+                    }catch(ex){
+
                     }
+
                 }
             }]
         );
@@ -134,33 +139,28 @@ App=function(){
             }
        })
         if(companys.length<maxcompanyNum){
-            companys.push(detail);
-        }
-        console.log(companys.length);
-
-        //console.log(JSON.stringify(detail))
-        //console.log(companys.length)
-        if(companys.length==maxcompanyNum){
-            console.log(companys.length)
-            for(var i=0;i<companys.length;i++){
-                server.getHrUrl(companys[i],i);
+            if(companys.length==maxcompanyNum-1){
+                companys.push(detail);
+                status=false;
+                for(var i=0;i<companys.length;i++){
+                    server.getHrUrl(companys[i],i);
+                }
+            }else{
+                companys.push(detail);
             }
-            status=false;
-
         }
-
     }
     //获取招聘页面url
     this.getHrUrl=function(detail,index){
-
       if(detail.weisite){
           c.queue([{
               uri: detail.weisite,
               jQuery: true,
               // The global callback won't be called
               callback: function (error, result ,$) {
+                  compeleteHrurl++;
                   if(result&&result.body){
-                      $=cheerio.load(result.body, {decodeEntities: false});
+                     $=cheerio.load(result.body, {decodeEntities: false});
                       try{
                           $('a').each(function(index, a) {
                               if($(a).html().indexOf('人才')>-1)
@@ -170,21 +170,25 @@ App=function(){
                           });
                           if( detail.hrUrl){
                               existHrUrl++;
+                              console.log("index"+index);
                               companys[index]=detail;
                           }
-                          compeleteHrurl++;
 
+                          console.log("compeleteHrurl"+compeleteHrurl);
 
 
                       }catch(ex){
 
                       }
                   }
+                  if(compeleteHrurl==companys.length){
+                      server.saveHtml();
+                  }
                }
           }]);
       }else{
           compeleteHrurl++;
-
+          console.log("compeleteHrurl"+compeleteHrurl);
           if(compeleteHrurl==companys.length){
               server.saveHtml();
           }
@@ -192,9 +196,10 @@ App=function(){
     }
 
     this.saveHtml=function(){
+        console.log("companys"+companys.length)
         var outputFilename = 'companies.json';
         companys.push({"existHrUrl":existHrUrl});
-        console.log("companys:"+companys.length)
+
         fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
             if(err) {
                 console.log(err);
