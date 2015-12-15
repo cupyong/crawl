@@ -89,7 +89,7 @@ App=function(){
                 jQuery: true,
                 // The global callback won't be called
                 callback: function (error, result ,$) {
-                    if(result.body){
+                    if(body&&result.body){
                         server.saveDetail(result.body);
                     }
                 }
