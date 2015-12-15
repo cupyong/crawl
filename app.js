@@ -173,10 +173,7 @@ App=function(){
                               companys[index]=detail;
                           }
                           compeleteHrurl++;
-                          if(compeleteHrurl==companys.length){
-                              companys.push({"existHrUrl":existHrUrl});
-                              server.saveHtml();
-                          }
+
                           console.log(compeleteHrurl)
 
                       }catch(ex){
@@ -196,8 +193,8 @@ App=function(){
 
     this.saveHtml=function(){
         var outputFilename = 'companies.json';
-        console.log(companys);
-         fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
+        companys.push({"existHrUrl":existHrUrl});
+        fs.writeFile(outputFilename, JSON.stringify(companys), function(err) {
             if(err) {
                 console.log(err);
             } else {
