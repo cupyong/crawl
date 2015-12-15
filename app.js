@@ -136,13 +136,14 @@ App=function(){
         if(companys.length<maxcompanyNum){
             companys.push(detail);
         }
+        console.log(companys.length);
 
         //console.log(JSON.stringify(detail))
         //console.log(companys.length)
         if(companys.length==maxcompanyNum){
             console.log(companys.length)
             for(var i=0;i<companys.length;i++){
-                server.getHrUrl(companys[i]);
+                server.getHrUrl(companys[i],i);
             }
             status=false;
 
