@@ -159,7 +159,7 @@ App=function(){
               jQuery: true,
               // The global callback won't be called
               callback: function (error, result ,$) {
-                  if(result.body){
+                  if(result&&result.body){
                       $=cheerio.load(result.body, {decodeEntities: false});
                       try{
                           $('a').each(function(index, a) {
