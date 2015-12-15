@@ -158,29 +158,30 @@ App=function(){
               jQuery: true,
               // The global callback won't be called
               callback: function (error, result ,$) {
-                  $=cheerio.load(result.body, {decodeEntities: false});
-                  try{
-                      $('a').each(function(index, a) {
-                          if($(a).html().indexOf('人才')>-1)
-                              detail.hrUrl=$(a).attr("href");
-                          if($(a).html().indexOf('招聘')>-1)
-                              detail.hrUrl=$(a).attr("href");
-                        });
-                       if( detail.hrUrl){
-                           existHrUrl++;
-                       }
-                      compeleteHrurl++;
-                      if(compeleteHrurl==companys.length){
-                          companys.push({"existHrUrl":existHrUrl});
-                          server.saveHtml();
+                  if(result.body){
+                      $=cheerio.load(result.body, {decodeEntities: false});
+                      try{
+                          $('a').each(function(index, a) {
+                              if($(a).html().indexOf('人才')>-1)
+                                  detail.hrUrl=$(a).attr("href");
+                              if($(a).html().indexOf('招聘')>-1)
+                                  detail.hrUrl=$(a).attr("href");
+                          });
+                          if( detail.hrUrl){
+                              existHrUrl++;
+                          }
+                          compeleteHrurl++;
+                          if(compeleteHrurl==companys.length){
+                              companys.push({"existHrUrl":existHrUrl});
+                              server.saveHtml();
+                          }
+                          console.log(compeleteHrurl)
+
+                      }catch(ex){
+
                       }
-                      console.log(compeleteHrurl)
-
-                  }catch(ex){
-
                   }
-
-              }
+               }
           }]);
       }else{
           compeleteHrurl++;
