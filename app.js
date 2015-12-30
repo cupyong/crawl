@@ -22,6 +22,7 @@ var c = new crawler({
     }
 });
 
+
 App=function(){
     var maxcompanyNum=1000;
     var compeleteHrurl=0;
