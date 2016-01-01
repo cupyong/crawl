@@ -102,6 +102,7 @@ App=function(){
             }]);
         }
     }
+    
     this.saveDetail=function(result){
 
         $=cheerio.load(result, {decodeEntities: false});
